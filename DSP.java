@@ -8,7 +8,7 @@ import org.jtransforms.fft.DoubleFFT_1D;
 import pl.edu.icm.jlargearrays.DoubleLargeArray;
 
 
-public class YShenCorrelater
+public class DSP
 {
 	private static DoubleLargeArray myFFT (DoubleLargeArray input) {
 		DoubleFFT_1D fftDo = new DoubleFFT_1D(input.length());
