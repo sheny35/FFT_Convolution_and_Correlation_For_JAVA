@@ -1,3 +1,8 @@
+/*
+*  This is used for calculating convolution and cross-correlation; All the computation is based on Jtransform fft lib. 
+*  a function used to compare two signals / calculate audio signal delay is also included, named signalShift. 
+*  to compile and use this class, download jtransforms and jlargearrays libs from: https://github.com/wendykierp/JTransforms
+*/
 import org.jtransforms.fft.DoubleFFT_1D;
 
 import pl.edu.icm.jlargearrays.DoubleLargeArray;
@@ -44,12 +49,12 @@ public class YShenCorrelater
         	fft1.setDouble(2*i, tmpResult[0]);
         	fft1.setDouble(2*i+1, tmpResult[1]);
         }
-        DoubleLargeArray fullResult = myIFFT(fft1);
-        DoubleLargeArray validResult = new DoubleLargeArray(fullResult.length()/2-2*x2.length()+2);
-        for(long k = 0;k <validResult.length();k++){
-        	validResult.set(k, fullResult.getDouble((k+x2.length()-1)*2));
+        DoubleLargeArray fullConv = myIFFT(fft1);
+        DoubleLargeArray validConv = new DoubleLargeArray(fullConv.length()/2-2*x2.length()+2);
+        for(long k = 0;k <validConv.length();k++){
+        	validConv.set(k, fullConv.getDouble((k+x2.length()-1)*2));
         }
-        return validResult;
+        return validConv;
     }
     
     private static DoubleLargeArray xcorr(DoubleLargeArray x1, DoubleLargeArray x2) {
@@ -59,8 +64,8 @@ public class YShenCorrelater
     		x2.setDouble(k, x2.getDouble(x2.length() - 1 - k));
     		x2.setDouble(x2.length() - 1 - k, tmp);
     	}
-    	DoubleLargeArray fullCorr = conv(x1, x2);
-    	return fullCorr;
+    	DoubleLargeArray corr = conv(x1, x2);
+    	return corr;
     }
 
     public static long singalShift(double[] x1, double[] x2){
